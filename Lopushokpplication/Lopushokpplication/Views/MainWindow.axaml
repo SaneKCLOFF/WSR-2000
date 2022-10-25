@@ -1,0 +1,81 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Lopushokpplication.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Lopushokpplication.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Lopushokpplication">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="70"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="0.5*"/>
+				<ColumnDefinition Width="0.5*"/>
+			</Grid.ColumnDefinitions>
+			<TextBox Grid.Column="0"
+					 Watermark="Введите текст"
+					 Text="{Binding Search}"/>
+			<StackPanel Orientation="Horizontal"
+						HorizontalAlignment="Right"
+						Grid.Column="1">
+				<ComboBox PlaceholderText="Сортировка"
+						  Items="{Binding SortBoxItems}"
+						  SelectedItem="{Binding SelectedSort}"/>
+				<ComboBox PlaceholderText="Фильтрация"
+						  Items="{Binding FiltherBoxItems}"
+						  SelectedItem="{Binding SelectedFilther}"/>
+			</StackPanel>
+		</Grid>
+		<ListBox
+		Items="{Binding TableItems}"
+		Grid.Row="1">
+			<ListBox.Styles>
+				<Style Selector="ListBoxItem">
+					<Setter Property="Template">
+						<Setter.Value>
+							<ControlTemplate TargetType="ListBoxItem">
+								<Border Background="Aqua"
+										CornerRadius="5">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="0.5*"/>
+											<ColumnDefinition/>
+											<ColumnDefinition Width="0.2*"/>
+										</Grid.ColumnDefinitions>
+										<Image Source="{Binding ProductImage}"
+											   Grid.Column="0"
+											   Height="100"
+											   Stretch="Uniform"/>
+										<StackPanel Orientation="Vertical"
+													Grid.Column="1">
+											<StackPanel Orientation="Horizontal">
+												<TextBlock Text="{Binding Type}"/>
+												<TextBlock Text=" | "/>
+												<TextBlock Text="{Binding Title}"/>
+											</StackPanel>
+											<TextBlock Text="{Binding Article}"/>
+											<TextBlock Text="{Binding Materials, StringFormat=Материалы: {0}}"/>
+										</StackPanel>
+										<TextBlock Grid.Column="2"
+												   Text="{Binding Cost, StringFormat={}{0:c}}"
+												   HorizontalAlignment="Right"/>
+									</Grid>
+								</Border>
+							</ControlTemplate>
+						</Setter.Value>
+					</Setter>
+				</Style>
+			</ListBox.Styles>
+		</ListBox>
+	</Grid>
+</Window>
